@@ -1,4 +1,5 @@
 {
+  "_exportedAt": "2026-05-17T17:25:29.245Z",
   "ain": {
     "name": "Amazon India",
     "base": "https://www.amazon.in",
@@ -25,7 +26,8 @@
         "label": "Wish List",
         "url": "/gp/registry/wishlist"
       }
-    }
+    },
+    "_pinned": true
   },
   "gh": {
     "name": "GitHub",
@@ -51,7 +53,8 @@
         "label": "Notifications",
         "url": "/notifications"
       }
-    }
+    },
+    "_pinned": true
   },
   "yt": {
     "name": "YouTube",
@@ -74,38 +77,13 @@
         "label": "Trending",
         "url": "/feed/trending"
       }
-    }
-  },
-  "mdn": {
-    "name": "MDN Web Docs",
-    "base": "https://developer.mozilla.org",
-    "search": "/en-US/search?q={query}"
+    },
+    "_pinned": true
   },
   "wiki": {
     "name": "Wikipedia",
     "base": "https://en.wikipedia.org",
     "search": "/w/index.php?search={query}"
-  },
-  "so": {
-    "name": "Stack Overflow",
-    "base": "https://stackoverflow.com",
-    "search": "/search?q={query}",
-    "resources": {
-      "questions": {
-        "label": "Questions",
-        "url": "/questions",
-        "search": "/search?q={query}"
-      },
-      "tags": {
-        "label": "Tags",
-        "url": "/tags",
-        "search": "/tags/{query}"
-      },
-      "users": {
-        "label": "Users",
-        "url": "/users"
-      }
-    }
   },
   "gm": {
     "name": "Gmail",
@@ -130,14 +108,152 @@
       }
     }
   },
-  "npm": {
-    "name": "npm",
-    "base": "https://www.npmjs.com",
-    "search": "/search?q={query}"
-  },
   "maps": {
     "name": "Google Maps",
     "base": "https://www.google.com/maps",
+    "search": "/search/{query}",
+    "_pinned": true
+  },
+  "gpt": {
+    "name": "ChatGPT",
+    "base": "https://chatgpt.com",
+    "resources": {
+      "new": {
+        "label": "New Chat",
+        "url": "/"
+      }
+    },
+    "_pinned": true
+  },
+  "pp": {
+    "name": "Perplexity",
+    "base": "https://www.perplexity.ai",
+    "search": "/search?q={query}",
+    "_pinned": true
+  },
+  "claude": {
+    "name": "Claude",
+    "base": "https://claude.ai",
+    "resources": {
+      "new": {
+        "label": "New Chat",
+        "url": "/new"
+      }
+    },
+    "_pinned": true
+  },
+  "gemini": {
+    "name": "Gemini",
+    "base": "https://gemini.google.com",
+    "resources": {
+      "app": {
+        "label": "Open App",
+        "url": "/app"
+      }
+    }
+  },
+  "hn": {
+    "name": "Hacker News",
+    "base": "https://news.ycombinator.com",
+    "resources": {
+      "new": {
+        "label": "New",
+        "url": "/newest"
+      },
+      "show": {
+        "label": "Show HN",
+        "url": "/show"
+      },
+      "ask": {
+        "label": "Ask HN",
+        "url": "/ask"
+      },
+      "jobs": {
+        "label": "Jobs",
+        "url": "/jobs"
+      }
+    }
+  },
+  "rd": {
+    "name": "Reddit",
+    "base": "https://www.reddit.com",
+    "search": "/search/?q={query}",
+    "_pinned": true
+  },
+  "gimg": {
+    "name": "Google Images",
+    "base": "https://www.google.com",
+    "search": "/search?tbm=isch&q={query}",
+    "_pinned": true
+  },
+  "dribbble": {
+    "name": "Dribbble",
+    "base": "https://dribbble.com",
     "search": "/search/{query}"
+  },
+  "tw": {
+    "name": "Twitter / X",
+    "base": "https://x.com",
+    "search": "/search?q={query}",
+    "resources": {
+      "home": {
+        "label": "Home",
+        "url": "/home"
+      },
+      "explore": {
+        "label": "Explore",
+        "url": "/explore"
+      },
+      "notifications": {
+        "label": "Notifications",
+        "url": "/notifications"
+      }
+    },
+    "_pinned": true
+  },
+  "imdb": {
+    "name": "IMDb",
+    "base": "https://www.imdb.com",
+    "search": "/find/?q={query}",
+    "resources": {
+      "top250": {
+        "label": "Top 250",
+        "url": "/chart/top"
+      },
+      "popular": {
+        "label": "Most Popular",
+        "url": "/chart/moviemeter"
+      }
+    }
+  },
+  "li": {
+    "name": "LinkedIn",
+    "base": "https://www.linkedin.com",
+    "search": "/search/results/all/?keywords={query}",
+    "resources": {
+      "feed": {
+        "label": "Feed",
+        "url": "/feed"
+      },
+      "jobs": {
+        "label": "Jobs",
+        "url": "/jobs"
+      },
+      "network": {
+        "label": "Network",
+        "url": "/mynetwork"
+      }
+    },
+    "_pinned": true
+  },
+  "hindu": {
+    "name": "The Hindu",
+    "base": "https://www.thehindu.com",
+    "search": "/search/?q={query}"
+  },
+  "mint": {
+    "name": "Mint",
+    "base": "https://www.livemint.com",
+    "search": "/search-results?q={query}"
   }
 }

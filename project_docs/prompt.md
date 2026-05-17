@@ -29,7 +29,7 @@ This app inspired from Dukckduckgo Bangs feature.
 3. **Terminal prompt label** — `› ENTER COMMAND OR SEARCH QUERY` with a blinking yellow block cursor
 4. **Search bar** — dark background, yellow border on focus with glow ring, yellow caret; animated **typewriter placeholder** cycles through example commands (`/gh react hooks`, `/mdn Array.prototype.map`, etc.)
 5. **goto Search button** — yellow outline (`#FFCC00`), fills yellow on hover, `↵` enter symbol; positioned directly above the hints grid
-6. **Sample mappings grid** — shows first 6 entries from loaded mappings as clickable tiles; clicking pre-fills the search bar with `/<cmd> `; hidden when the search bar has input
+6. **Sample mappings grid** — shows first 6 entries from loaded mappings (pinned items first) as clickable tiles; clicking pre-fills the search bar with `/<cmd> `; hidden when the search bar has input
 7. **Footer** — `TAB: autocomplete · ENTER: execute · /cmd: route` keyboard hints in dim monospace; hidden on mobile
 
 ## Command Dropdown
@@ -50,8 +50,36 @@ This app inspired from Dukckduckgo Bangs feature.
 - An **"Unsaved changes"** badge appears in the header when there are pending edits
 - Mappings are loaded from `localStorage` on every page load; first visit seeds it from `mappings.json`
 - A **Download JSON** button exports the current state as `mappings.json`, with a `_exportedAt` ISO timestamp at the top of the file
+- An **Upload JSON** button opens a file picker accepting `.json` files; the uploaded file replaces the entire in-memory mappings state, strips the `_exportedAt` metadata key if present, and marks the editor as dirty so the user can review before saving
 - **Left panel**: scrollable list of all site commands — navigate with `↑↓`, `n` to add, `Del` to delete, `Enter` to focus editor, `f` to focus search
 - **Search**: filter bar at the top of the left panel — searches by command key, site name, and description; `Esc` clears, `↓` moves into the list
 - **Right panel**: editable fields for command key, name, description, base URL, search path, and a resources table
 - **Description field**: optional free-text field per site for keywords/topics; shown as a subtitle in the list and searched when filtering
-- **Validation**: renaming a command or resource key to one that already exists shows an inline error and blocks the rename
+- **Validation**: renaming a command or resource key to one that already exists shows an inline error and blocks the *rename*
+- **Pin feature**: each list item has a `★ / ☆` button; pinned items float to the top of the list; pin state stored as `_pinned: true` on the mapping entry and persists through Save, Download JSON, and Upload JSON
+
+# Default Mappings (`public/mappings.json`)
+
+The bundled default mappings (seeded into localStorage on first visit):
+
+| Command | Site |
+|---|---|
+| `/ain` | Amazon India |
+| `/gh` | GitHub |
+| `/yt` | YouTube |
+| `/wiki` | Wikipedia |
+| `/gm` | Gmail |
+| `/maps` | Google Maps |
+| `/gpt` | ChatGPT |
+| `/pp` | Perplexity |
+| `/claude` | Claude |
+| `/gemini` | Gemini |
+| `/hn` | Hacker News |
+| `/rd` | Reddit |
+| `/gimg` | Google Images |
+| `/dribbble` | Dribbble |
+| `/tw` | Twitter / X |
+| `/imdb` | IMDb |
+| `/li` | LinkedIn |
+| `/hindu` | The Hindu |
+| `/mint` | Mint (Live Mint) |

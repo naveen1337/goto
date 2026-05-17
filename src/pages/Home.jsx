@@ -73,7 +73,11 @@ export default function Home() {
   }, [])
 
   const suggestions = mappings ? getSuggestions(query, mappings) : []
-  const sampleMappings = mappings ? Object.entries(mappings).slice(0, 6) : []
+  const sampleMappings = mappings
+    ? Object.entries(mappings)
+        .sort(([, a], [, b]) => (b._pinned ? 1 : 0) - (a._pinned ? 1 : 0))
+        .slice(0, 6)
+    : []
 
   const handleSearch = useCallback(() => {
     const trimmed = query.trim()

@@ -14,6 +14,7 @@ export default function MappingsEditor() {
   const [mobilePanel, setMobilePanel] = useState('list') // 'list' | 'editor'
   const listRef = useRef(null)
   const searchRef = useRef(null)
+  const fileInputRef = useRef(null)
 
   // Load on mount: localStorage → fallback to bundled JSON
   useEffect(() => {
@@ -39,10 +40,39 @@ export default function MappingsEditor() {
     }
   }
 
+  const handleUpload = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      try {
+        const parsed = JSON.parse(ev.target.result)
+        // Strip _exportedAt metadata key added by downloadMappings
+        const { _exportedAt: _removed, ...data } = parsed
+        if (typeof data !== 'object' || Array.isArray(data) || Object.keys(data).length === 0) {
+          alert('Invalid mappings file: expected a non-empty JSON object.')
+          return
+        }
+        setMappings(data)
+        setSelectedKey(Object.keys(data)[0] ?? null)
+        setIsDirty(true)
+      } catch {
+        alert('Failed to parse JSON. Make sure the file is a valid mappings export.')
+      }
+    }
+    reader.readAsText(file)
+    // Reset so the same file can be re-uploaded if needed
+    e.target.value = ''
+  }
+
   const keys = mappings ? Object.keys(mappings) : []
 
+  const sortedKeys = [...keys].sort((a, b) =>
+    (mappings[b]?._pinned ? 1 : 0) - (mappings[a]?._pinned ? 1 : 0)
+  )
+
   const filteredKeys = searchQuery.trim()
-    ? keys.filter((k) => {
+    ? sortedKeys.filter((k) => {
         const s = mappings[k]
         const q = searchQuery.toLowerCase()
         return (
@@ -51,7 +81,7 @@ export default function MappingsEditor() {
           (s.description ?? '').toLowerCase().includes(q)
         )
       })
-    : keys
+    : sortedKeys
 
   const selectedIndex = filteredKeys.indexOf(selectedKey)
 
@@ -146,6 +176,16 @@ export default function MappingsEditor() {
     // isDirty already set by updateSite
   }
 
+  const togglePin = (key) => {
+    setMappings((prev) => {
+      const site = { ...prev[key] }
+      if (site._pinned) delete site._pinned
+      else site._pinned = true
+      return { ...prev, [key]: site }
+    })
+    setIsDirty(true)
+  }
+
   // ---- list keyboard navigation --------------------------------------------
   const handleListKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
@@ -208,6 +248,19 @@ export default function MappingsEditor() {
             Download JSON
           </button>
           <button
+            onClick={() => fileInputRef.current?.click()}
+            className="px-4 py-1.5 text-sm border border-[#0f62fe] text-[#0f62fe] hover:bg-[#e8f0fe] transition-colors"
+          >
+            Upload JSON
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json,application/json"
+            className="hidden"
+            onChange={handleUpload}
+          />
+          <button
             onClick={() => navigate('/')}
             className="px-4 py-1.5 text-sm bg-[#161616] text-white hover:bg-[#393939] transition-colors"
           >
@@ -263,10 +316,10 @@ export default function MappingsEditor() {
               const s = mappings[key]
               const active = key === selectedKey
               return (
-                <button
+                <div
                   key={key}
                   onClick={() => { setSelectedKey(key); setMobilePanel('editor'); listRef.current?.focus() }}
-                  className={`w-full text-left px-4 py-2.5 flex items-center gap-3 border-b border-[#f4f4f4] transition-colors ${
+                  className={`w-full text-left px-4 py-2.5 flex items-center gap-3 border-b border-[#f4f4f4] transition-colors cursor-pointer ${
                     active
                       ? 'bg-[#e8f0fe] border-l-2 border-l-[#0f62fe]'
                       : 'hover:bg-[#f4f4f4] border-l-2 border-l-transparent'
@@ -275,13 +328,22 @@ export default function MappingsEditor() {
                   <span className="font-mono text-sm font-bold text-[#0f62fe] w-16 shrink-0">
                     /{key}
                   </span>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="text-sm text-[#525252] truncate">{s.name}</div>
                     {s.description && (
                       <div className="text-xs text-[#a8a8a8] truncate">{s.description}</div>
                     )}
                   </div>
-                </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); togglePin(key) }}
+                    className={`shrink-0 text-base leading-none transition-colors ${
+                      s._pinned ? 'text-[#0f62fe]' : 'text-[#d0d0d0] hover:text-[#525252]'
+                    }`}
+                    title={s._pinned ? 'Unpin' : 'Pin to top'}
+                  >
+                    {s._pinned ? '★' : '☆'}
+                  </button>
+                </div>
               )
             })}
           </div>
