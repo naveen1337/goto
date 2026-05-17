@@ -11,6 +11,7 @@ export default function MappingsEditor() {
   const [selectedKey, setSelectedKey] = useState(null)
   const [isDirty, setIsDirty] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [mobilePanel, setMobilePanel] = useState('list') // 'list' | 'editor'
   const listRef = useRef(null)
   const searchRef = useRef(null)
 
@@ -183,7 +184,7 @@ export default function MappingsEditor() {
   return (
     <div className="min-h-screen bg-white flex flex-col text-[#161616]" style={{ height: '100vh' }}>
       {/* ── Header ── */}
-      <header className="flex items-center justify-between px-6 py-3 border-b border-[#e0e0e0] shrink-0">
+      <header className="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-6 py-3 border-b border-[#e0e0e0] shrink-0">
         <div className="flex items-center gap-3">
           <h1 className="text-base font-semibold tracking-tight">Mappings Editor</h1>
           {isDirty && (
@@ -192,7 +193,7 @@ export default function MappingsEditor() {
             </span>
           )}
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             onClick={handleSave}
             disabled={!isDirty}
@@ -218,7 +219,7 @@ export default function MappingsEditor() {
       {/* ── Body ── */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left: site list */}
-        <div className="flex flex-col w-80 shrink-0 border-r border-[#e0e0e0] overflow-hidden">
+        <div className={`flex-col w-full md:w-80 shrink-0 border-r border-[#e0e0e0] overflow-hidden ${mobilePanel === 'editor' ? 'hidden md:flex' : 'flex'}`}>
           {/* Search input */}
           <div className="flex items-center border-b border-[#e0e0e0] shrink-0">
             <span className="pl-3 text-[#a8a8a8]">
@@ -264,7 +265,7 @@ export default function MappingsEditor() {
               return (
                 <button
                   key={key}
-                  onClick={() => { setSelectedKey(key); listRef.current?.focus() }}
+                  onClick={() => { setSelectedKey(key); setMobilePanel('editor'); listRef.current?.focus() }}
                   className={`w-full text-left px-4 py-2.5 flex items-center gap-3 border-b border-[#f4f4f4] transition-colors ${
                     active
                       ? 'bg-[#e8f0fe] border-l-2 border-l-[#0f62fe]'
@@ -297,7 +298,7 @@ export default function MappingsEditor() {
         </div>
 
         {/* Right: editor */}
-        <div className="flex-1 overflow-y-auto">
+        <div className={`flex-1 overflow-y-auto ${mobilePanel === 'list' ? 'hidden md:block' : 'block'}`}>
           {site ? (
             <SiteForm
               key={selectedKey}
@@ -314,6 +315,7 @@ export default function MappingsEditor() {
               onUpdateResource={(sk, u) => updateResource(selectedKey, sk, u)}
               onRenameResourceKey={(o, n) => renameResourceKey(selectedKey, o, n)}
               onDeleteResource={(sk) => deleteResource(selectedKey, sk)}
+              onBackToList={() => setMobilePanel('list')}
             />
           ) : (
             <div className="flex items-center justify-center h-full text-sm text-[#a8a8a8]">
@@ -324,7 +326,7 @@ export default function MappingsEditor() {
       </div>
 
       {/* ── Footer shortcuts ── */}
-      <footer className="px-5 py-2 border-t border-[#e0e0e0] flex gap-5 text-[11px] text-[#a8a8a8] shrink-0">
+      <footer className="hidden sm:flex px-5 py-2 border-t border-[#e0e0e0] gap-5 text-[11px] text-[#a8a8a8] shrink-0">
         {[
           ['↑↓', 'navigate'],
           ['f', 'search'],
@@ -358,6 +360,7 @@ function SiteForm({
   onUpdateResource,
   onRenameResourceKey,
   onDeleteResource,
+  onBackToList,
 }) {
   const [keyDraft, setKeyDraft] = useState(siteKey)
   const [cmdError, setCmdError] = useState('')
@@ -372,17 +375,25 @@ function SiteForm({
   }
 
   return (
-    <div onKeyDown={handleFormKeyDown} className="p-6">
+    <div onKeyDown={handleFormKeyDown} className="p-4 sm:p-6">
       {/* Site header */}
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-sm font-semibold text-[#161616]">{site.name}</h2>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onBackToList}
+            className="md:hidden text-xs text-[#0f62fe] hover:underline"
+          >
+            ← Sites
+          </button>
+          <h2 className="text-sm font-semibold text-[#161616]">{site.name}</h2>
+        </div>
         <button onClick={onDelete} className="text-xs text-[#da1e28] hover:underline">
           Delete site
         </button>
       </div>
 
       {/* Basic fields */}
-      <div className="grid grid-cols-[120px_1fr] gap-x-4 gap-y-3 items-start mb-7">
+      <div className="grid grid-cols-1 sm:grid-cols-[120px_1fr] gap-x-4 gap-y-3 items-start mb-7">
         <Label>Command</Label>
         <div>
           <AutoTextarea
@@ -471,28 +482,30 @@ function SiteForm({
             No resources yet — press <strong>+ Add</strong> to create one
           </p>
         ) : (
-          <div className="border border-[#e0e0e0] overflow-hidden">
-            {/* Table head */}
-            <div className="grid gap-0 bg-[#f4f4f4] border-b border-[#e0e0e0]" style={{ gridTemplateColumns: '130px 160px 1fr 1fr 36px' }}>
-              {['Command', 'Label', 'URL', 'Search (opt.)', ''].map((h) => (
-                <span key={h} className="px-3 py-2 text-xs font-semibold text-[#525252]">
-                  {h}
-                </span>
+          <div className="border border-[#e0e0e0] overflow-x-auto">
+            <div className="min-w-[600px]">
+              {/* Table head */}
+              <div className="grid gap-0 bg-[#f4f4f4] border-b border-[#e0e0e0]" style={{ gridTemplateColumns: '130px 160px 1fr 1fr 36px' }}>
+                {['Command', 'Label', 'URL', 'Search (opt.)', ''].map((h) => (
+                  <span key={h} className="px-3 py-2 text-xs font-semibold text-[#525252]">
+                    {h}
+                  </span>
+                ))}
+              </div>
+
+              {resourceKeys.map((subKey, i) => (
+                <ResourceRow
+                  key={subKey}
+                  subKey={subKey}
+                  resource={resources[subKey]}
+                  isLast={i === resourceKeys.length - 1}
+                  allResourceKeys={resourceKeys.filter((k) => k !== subKey)}
+                  onRenameKey={(nk) => onRenameResourceKey(subKey, nk)}
+                  onUpdate={(u) => onUpdateResource(subKey, u)}
+                  onDelete={() => onDeleteResource(subKey)}
+                />
               ))}
             </div>
-
-            {resourceKeys.map((subKey, i) => (
-              <ResourceRow
-                key={subKey}
-                subKey={subKey}
-                resource={resources[subKey]}
-                isLast={i === resourceKeys.length - 1}
-                allResourceKeys={resourceKeys.filter((k) => k !== subKey)}
-                onRenameKey={(nk) => onRenameResourceKey(subKey, nk)}
-                onUpdate={(u) => onUpdateResource(subKey, u)}
-                onDelete={() => onDeleteResource(subKey)}
-              />
-            ))}
           </div>
         )}
       </div>
@@ -621,7 +634,7 @@ function AutoTextarea({ className, value, onChange, onBlur, onKeyDown, id, place
 
 function Label({ children, hint }) {
   return (
-    <label className="text-sm text-[#525252] text-right leading-tight pt-1.5">
+    <label className="text-sm text-[#525252] sm:text-right leading-tight pt-0.5 sm:pt-1.5">
       {children}
       {hint && <span className="block text-xs text-[#a8a8a8]">{hint}</span>}
     </label>

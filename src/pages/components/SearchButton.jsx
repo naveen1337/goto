@@ -18,7 +18,7 @@ export default function SearchButton({
     secondary:
       'bg-[#393939] text-white hover:bg-[#474747] active:bg-[#161616]',
     tertiary:
-      'bg-transparent text-[#0f62fe] border border-[#0f62fe] hover:bg-[#0f62fe] hover:text-white active:bg-[#002d9c] active:border-[#002d9c]',
+      'bg-transparent text-[#FFCC00] border border-[#FFCC00] hover:bg-[#FFCC00] hover:text-black active:bg-[#ccaa00] active:border-[#ccaa00]',
     ghost:
       'bg-transparent text-[#0f62fe] hover:bg-[#e8e8e8] active:bg-[#c6c6c6]',
   }

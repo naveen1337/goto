@@ -20,6 +20,7 @@ export default function SearchBar({
   onKeyDown,
   suggestions = [],
   onSuggestionSelect,
+  placeholder = 'Type /command or search the web…',
 }) {
   const [focused, setFocused] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -94,17 +95,17 @@ export default function SearchBar({
     <div className="relative w-full">
       <div
         className={`
-          flex items-center w-full transition-all duration-100
+          flex items-center w-full transition-all duration-150
           border outline-none
           ${
             focused
-              ? 'border-[#0f62fe] bg-white shadow-[0_0_0_2px_#0f62fe]'
-              : 'border-[#e0e0e0] bg-[#f4f4f4] hover:bg-[#e8e8e8] hover:border-[#c6c6c6]'
+              ? 'border-[#FFCC00] bg-[#0a0900] shadow-[0_0_0_1px_#FFCC00,0_0_24px_rgba(255,204,0,0.2)]'
+              : 'border-[#3d3300] bg-[#0a0900] hover:border-[#665200] hover:bg-[#110e00]'
           }
         `}
       >
       {/* Search icon */}
-      <span className="pl-4 pr-3 text-[#525252] flex-shrink-0">
+      <span className="pl-4 pr-3 text-[#FFCC00] flex-shrink-0">
         <SearchIcon />
       </span>
 
@@ -112,8 +113,8 @@ export default function SearchBar({
       <input
         ref={inputRef}
         type="text"
-        className="flex-1 bg-transparent py-4 text-[#161616] text-base placeholder-[#a8a8a8] outline-none"
-        placeholder="Type /command or search the web"
+        className="flex-1 bg-transparent py-4 text-[#fef3c7] text-base placeholder-[#665200] outline-none caret-[#FFCC00]"
+        placeholder={placeholder}
         value={value}
         onChange={handleChange}
         onFocus={() => setFocused(true)}
@@ -131,7 +132,7 @@ export default function SearchBar({
         <button
           type="button"
           onClick={handleClear}
-          className="pl-2 pr-2 text-[#525252] hover:text-[#161616] transition-colors flex-shrink-0 focus:outline-none"
+          className="pl-2 pr-2 text-[#665200] hover:text-[#FFE033] transition-colors flex-shrink-0 focus:outline-none"
           aria-label="Clear search"
         >
           <CloseIcon />
@@ -139,7 +140,7 @@ export default function SearchBar({
       )}
 
       {/* Divider */}
-      <span className="w-px h-5 bg-[#e0e0e0] mx-1 flex-shrink-0" />
+      <span className="w-px h-5 bg-[#3d3300] mx-1 flex-shrink-0" />
     </div>
 
     {showDropdown && (
