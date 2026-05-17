@@ -1,0 +1,143 @@
+{
+  "ain": {
+    "name": "Amazon India",
+    "base": "https://www.amazon.in",
+    "search": "/s?k={query}",
+    "resources": {
+      "orders": {
+        "label": "Order History",
+        "url": "/gp/css/order-history",
+        "search": "/your-orders/search/?search={query}"
+      },
+      "account": {
+        "label": "Account",
+        "url": "/gp/css/homepage.html"
+      },
+      "addresses": {
+        "label": "Addresses",
+        "url": "/gp/css/account-address-list-view.html"
+      },
+      "cart": {
+        "label": "Cart",
+        "url": "/gp/cart/view.html"
+      },
+      "wishlist": {
+        "label": "Wish List",
+        "url": "/gp/registry/wishlist"
+      }
+    }
+  },
+  "gh": {
+    "name": "GitHub",
+    "base": "https://github.com",
+    "search": "/search?q={query}",
+    "resources": {
+      "issues": {
+        "label": "Issues",
+        "url": "/issues",
+        "search": "/search?type=issues&q={query}"
+      },
+      "prs": {
+        "label": "Pull Requests",
+        "url": "/pulls",
+        "search": "/search?type=pullrequests&q={query}"
+      },
+      "explore": {
+        "label": "Explore",
+        "url": "/explore",
+        "search": "/search?q={query}"
+      },
+      "notifications": {
+        "label": "Notifications",
+        "url": "/notifications"
+      }
+    }
+  },
+  "yt": {
+    "name": "YouTube",
+    "base": "https://www.youtube.com",
+    "search": "/results?search_query={query}",
+    "resources": {
+      "subs": {
+        "label": "Subscriptions",
+        "url": "/feed/subscriptions"
+      },
+      "history": {
+        "label": "Watch History",
+        "url": "/feed/history"
+      },
+      "library": {
+        "label": "Library",
+        "url": "/feed/library"
+      },
+      "trending": {
+        "label": "Trending",
+        "url": "/feed/trending"
+      }
+    }
+  },
+  "mdn": {
+    "name": "MDN Web Docs",
+    "base": "https://developer.mozilla.org",
+    "search": "/en-US/search?q={query}"
+  },
+  "wiki": {
+    "name": "Wikipedia",
+    "base": "https://en.wikipedia.org",
+    "search": "/w/index.php?search={query}"
+  },
+  "so": {
+    "name": "Stack Overflow",
+    "base": "https://stackoverflow.com",
+    "search": "/search?q={query}",
+    "resources": {
+      "questions": {
+        "label": "Questions",
+        "url": "/questions",
+        "search": "/search?q={query}"
+      },
+      "tags": {
+        "label": "Tags",
+        "url": "/tags",
+        "search": "/tags/{query}"
+      },
+      "users": {
+        "label": "Users",
+        "url": "/users"
+      }
+    }
+  },
+  "gm": {
+    "name": "Gmail",
+    "base": "https://mail.google.com",
+    "search": "/mail/u/0/#search/{query}",
+    "resources": {
+      "inbox": {
+        "label": "Inbox",
+        "url": "/mail/u/0/#inbox"
+      },
+      "sent": {
+        "label": "Sent",
+        "url": "/mail/u/0/#sent"
+      },
+      "drafts": {
+        "label": "Drafts",
+        "url": "/mail/u/0/#drafts"
+      },
+      "starred": {
+        "label": "Starred",
+        "url": "/mail/u/0/#starred"
+      }
+    }
+  },
+  "npm": {
+    "name": "npm",
+    "base": "https://www.npmjs.com",
+    "search": "/search?q={query}"
+  },
+  "maps": {
+    "name": "Google Maps",
+    "base": "https://www.google.com/maps",
+    "search": "/search/{query}"
+  }
+}
