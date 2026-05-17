@@ -117,12 +117,8 @@
   "gpt": {
     "name": "ChatGPT",
     "base": "https://chatgpt.com",
-    "resources": {
-      "new": {
-        "label": "New Chat",
-        "url": "/"
-      }
-    },
+    "search": "/?prompt={query}",
+    
     "_pinned": true
   },
   "pp": {
@@ -134,6 +130,7 @@
   "claude": {
     "name": "Claude",
     "base": "https://claude.ai",
+    "search": "/new?q={query}",
     "resources": {
       "new": {
         "label": "New Chat",
@@ -145,6 +142,7 @@
   "gemini": {
     "name": "Gemini",
     "base": "https://gemini.google.com",
+    "search": "/app?q={query}",
     "resources": {
       "app": {
         "label": "Open App",
@@ -167,11 +165,8 @@
       "ask": {
         "label": "Ask HN",
         "url": "/ask"
-      },
-      "jobs": {
-        "label": "Jobs",
-        "url": "/jobs"
       }
+    
     }
   },
   "rd": {
